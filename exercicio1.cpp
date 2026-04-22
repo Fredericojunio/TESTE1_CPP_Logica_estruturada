@@ -1,36 +1,38 @@
-#include <iostream>
-using namespace std;
+#include <stdio.h>
 
 int main() {
-    string produtos[20];
-    float precos[20];
+    float temp[7];
+    char *dias[7] = {
+        "Segunda", "Terca", "Quarta", "Quinta",
+        "Sexta", "Sabado", "Domingo"
+    };
 
-    for(int i = 0; i < 20; i++) {
-        cout << "Produto " << i+1 << ": ";
-        cin >> produtos[i];
-        
-        cout << "Preco: ";
-        cin >> precos[i];
-    }
+    float soma = 0, media;
+    float maior;
+    int diaMaior = 0;
 
-    string busca;
-    cout << "\nDigite o nome do produto: ";
-    cin >> busca;
+    // Leitura das temperaturas
+    for (int i = 0; i < 7; i++) {
+        printf("Digite a temperatura de %s: ", dias[i]);
+        scanf("%f", &temp[i]);
 
-    bool encontrado = false;
+        soma += temp[i];
 
-    for(int i = 0; i < 20; i++) {
-        if(produtos[i] == busca) {
-            cout << "Preco de " << produtos[i] 
-                 << ": " << precos[i] << " MT\n";
-            encontrado = true;
-            break;
+        // inicializa o maior na primeira leitura
+        if (i == 0 || temp[i] > maior) {
+            maior = temp[i];
+            diaMaior = i;
         }
     }
 
-    if(!encontrado) {
-        cout << "Produto nao encontrado.\n";
-    }
+    // cálculo da média
+    media = soma / 7;
+
+    // resultados
+    printf("\n--- RESULTADOS ---\n");
+    printf("Media semanal: %.2f\n", media);
+    printf("Maior temperatura: %.2f\n", maior);
+    printf("Dia mais quente: %s\n", dias[diaMaior]);
 
     return 0;
 }
