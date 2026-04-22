@@ -1,35 +1,49 @@
-#include <iostream>
-#include <string>
-using namespace std;
+#include <stdio.h>
 
 int main() {
-    string nomes[15];
-    float medias[15];
-    int aprovados = 0;
+    int codigo[10];
+    int stock[10];
 
-    // Entrada de dados
-    cout << "=== Cadastro de Alunos ===" << endl;
-    for(int i = 0; i < 15; i++) {
-        cout << "Aluno " << i + 1 << endl;
-        cout << "Nome: ";
-        cin >> nomes[i];
-        cout << "Media final: ";
-        cin >> medias[i];
+    int i, codigoPesquisa, encontrado;
+
+    // Leitura dos dados dos produtos
+    for (i = 0; i < 10; i++) {
+        printf("Digite o codigo do produto %d: ", i + 1);
+        scanf("%d", &codigo[i]);
+
+        printf("Digite o stock do produto %d: ", i + 1);
+        scanf("%d", &stock[i]);
     }
 
-    // Listar alunos aprovados
-    cout << "\n=== Alunos Aprovados ===" << endl;
-    for(int i = 0; i < 15; i++) {
-        if(medias[i] >= 10) {
-            cout << nomes[i] << endl;
-            aprovados++;
+    // Pesquisa
+    printf("\n--- PESQUISA DE PRODUTO ---\n");
+    printf("Digite o codigo a procurar (ou -1 para sair): ");
+    scanf("%d", &codigoPesquisa);
+
+    while (codigoPesquisa != -1) {
+        encontrado = 0;
+
+        for (i = 0; i < 10; i++) {
+            if (codigo[i] == codigoPesquisa) {
+                printf("\nProduto encontrado!\n");
+                printf("Quantidade em stock: %d\n", stock[i]);
+
+                if (stock[i] < 5) {
+                    printf("AVISO: STOCK CRITICO!\n");
+                }
+
+                encontrado = 1;
+                break;
+            }
         }
+
+        if (!encontrado) {
+            printf("Produto nao encontrado.\n");
+        }
+
+        printf("\nDigite outro codigo (ou -1 para sair): ");
+        scanf("%d", &codigoPesquisa);
     }
-
-    // Cálculo da percentagem de aprovação
-    float percentagem = (aprovados / 15.0) * 100;
-
-    cout << "\nPercentagem de aprovacao: " << percentagem << "%" << endl;
 
     return 0;
 }
