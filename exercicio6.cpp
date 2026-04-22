@@ -1,35 +1,43 @@
-#include <iostream>
-using namespace std;
+#include <stdio.h>
+#include <string.h>
 
 int main() {
-    string produtos[20];
+    char produtos[20][50];
     float precos[20];
 
-    for(int i = 0; i < 20; i++) {
-        cout << "Produto " << i+1 << ": ";
-        cin >> produtos[i];
-        
-        cout << "Preco: ";
-        cin >> precos[i];
+    char nomePesquisa[50];
+    int i;
+    int encontrado;
+
+    // Leitura dos produtos
+    for (i = 0; i < 20; i++) {
+        printf("Produto %d\n", i + 1);
+
+        printf("Nome: ");
+        scanf(" %[^\n]", produtos[i]);
+
+        printf("Preco: ");
+        scanf("%f", &precos[i]);
     }
 
-    string busca;
-    cout << "\nDigite o nome do produto: ";
-    cin >> busca;
+    // Pesquisa
+    printf("\n--- PESQUISA DE PRODUTO ---\n");
+    printf("Digite o nome do produto: ");
+    scanf(" %[^\n]", nomePesquisa);
 
-    bool encontrado = false;
+    encontrado = 0;
 
-    for(int i = 0; i < 20; i++) {
-        if(produtos[i] == busca) {
-            cout << "Preco de " << produtos[i] 
-                 << ": " << precos[i] << " MT\n";
-            encontrado = true;
+    for (i = 0; i < 20; i++) {
+        if (strcmp(produtos[i], nomePesquisa) == 0) {
+            printf("\nProduto encontrado!\n");
+            printf("Preco: %.2f MT\n", precos[i]);
+            encontrado = 1;
             break;
         }
     }
 
-    if(!encontrado) {
-        cout << "Produto nao encontrado.\n";
+    if (!encontrado) {
+        printf("\nProduto nao encontrado no sistema.\n");
     }
 
     return 0;
