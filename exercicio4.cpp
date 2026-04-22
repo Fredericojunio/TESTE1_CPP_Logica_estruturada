@@ -1,40 +1,53 @@
-#include <iostream>
-using namespace std;
+#include <stdio.h>
 
 int main() {
-    string nomes[8];
-    float tempos[8];
+    char nome_item[5][50];
+    float preco_unitario[5];
+    int quantidade[5];
+    float subtotal[5];
 
-    for(int i = 0; i < 8; i++) {
-        cout << "\nAtleta " << i+1 << endl;
-        cout << "Nome: ";
-        cin >> nomes[i];
-        
-        cout << "Tempo (segundos): ";
-        cin >> tempos[i];
+    float total = 0;
+    int i;
+
+    // Leitura dos dados
+    for (i = 0; i < 5; i++) {
+        printf("\nItem %d\n", i + 1);
+
+        printf("Nome do item: ");
+        scanf(" %[^\n]", nome_item[i]);
+
+        printf("Preco unitario: ");
+        scanf("%f", &preco_unitario[i]);
+
+        printf("Quantidade comprada: ");
+        scanf("%d", &quantidade[i]);
+
+        // cÃ¡lculo do subtotal
+        subtotal[i] = preco_unitario[i] * quantidade[i];
+        total += subtotal[i];
     }
 
-    // Bubble Sort
-    for(int i = 0; i < 7; i++) {
-        for(int j = 0; j < 7 - i; j++) {
-            if(tempos[j] > tempos[j+1]) {
-                // trocar tempos
-                float temp = tempos[j];
-                tempos[j] = tempos[j+1];
-                tempos[j+1] = temp;
-
-                // trocar nomes (paralelo)
-                string tempNome = nomes[j];
-                nomes[j] = nomes[j+1];
-                nomes[j+1] = tempNome;
-            }
-        }
+    // Mostrar fatura
+    printf("\n--- FATURA ---\n");
+    for (i = 0; i < 5; i++) {
+        printf("%s | %.2f x %d = %.2f\n",
+               nome_item[i],
+               preco_unitario[i],
+               quantidade[i],
+               subtotal[i]);
     }
 
-    cout << "\n--- Classificacao ---\n";
-    for(int i = 0; i < 8; i++) {
-        cout << i+1 << "º - " << nomes[i] 
-             << ": " << tempos[i] << " s\n";
+    printf("\nTotal sem desconto: %.2f MT\n", total);
+
+    // Aplicar desconto
+    if (total > 1000) {
+        float desconto = total * 0.10;
+        float total_final = total - desconto;
+
+        printf("Desconto aplicado (10%%): -%.2f MT\n", desconto);
+        printf("Total final: %.2f MT\n", total_final);
+    } else {
+        printf("Nenhum desconto aplicado.\n");
     }
 
     return 0;
